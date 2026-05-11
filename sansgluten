@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manger sans gluten 🌾</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:#FFF5F8;
+    --warm:#FFE8EF;
+    --sand:#F9D0DC;
+    --rose:#E8779A;
+    --deep-rose:#C0446E;
+    --mauve:#9B6B9E;
+    --light-mauve:#C9A8CC;
+    --peach:#F4A99A;
+    --text:#2D1A22;
+    --muted:#8A5E6E;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;}
+
+  /* HERO */
+  .hero{min-height:100vh;background:linear-gradient(135deg,#FFF0F5 0%,#FFE2EC 40%,#FCCFDC 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(155,107,158,.15) 0%,transparent 70%);top:-200px;right:-200px;border-radius:50%;}
+  .hero::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(232,119,154,.15) 0%,transparent 70%);bottom:-100px;left:-100px;border-radius:50%;}
+  .hero-inner{text-align:center;max-width:750px;padding:2rem;position:relative;z-index:1;animation:fadeUp 1s ease both;}
+  .hero-emoji{font-size:4rem;display:block;margin-bottom:1.5rem;animation:float 4s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,7vw,5.5rem);line-height:1.05;color:var(--deep-rose);margin-bottom:1.5rem;}
+  .hero h1 em{font-style:italic;color:var(--mauve);}
+  .hero-sub{font-size:1.1rem;color:var(--muted);line-height:1.7;max-width:520px;margin:0 auto;}
+  .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-size:1.5rem;animation:bounce 2s ease-in-out infinite;opacity:.4;}
+  @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+  /* ALERTE */
+  .alert-section{background:var(--warm);border-left:5px solid var(--rose);padding:2.5rem;max-width:860px;margin:4rem auto;border-radius:0 16px 16px 0;}
+  .alert-section h2{font-family:'Playfair Display',serif;font-size:1.4rem;margin-bottom:1rem;color:var(--deep-rose);}
+  .alert-section p{color:var(--muted);line-height:1.8;margin-bottom:.75rem;}
+  .causes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-top:1.5rem;}
+  .cause-card{background:white;border-radius:12px;padding:1.2rem;text-align:center;box-shadow:0 2px 12px rgba(200,100,130,.08);transition:transform .2s;}
+  .cause-card:hover{transform:translateY(-3px);}
+  .cause-card .icon{font-size:1.8rem;margin-bottom:.5rem;}
+  .cause-card p{font-size:.85rem;color:var(--muted);}
+
+  /* SUBSTITUTION */
+  .subst-section{background:linear-gradient(135deg,#3D1A2E 0%,#5C2947 100%);padding:5rem 2rem;}
+  .subst-inner{max-width:860px;margin:0 auto;}
+  .subst-section .section-header{padding:0 0 2.5rem;text-align:center;}
+  .subst-section .section-header .label{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.15em;color:var(--light-mauve);text-transform:uppercase;margin-bottom:.75rem;display:block;}
+  .subst-section .section-header h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);color:white;}
+  .subst-table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.06);border-radius:16px;overflow:hidden;}
+  .subst-table thead{background:rgba(255,255,255,.1);}
+  .subst-table thead th{font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--light-mauve);padding:.9rem 1.2rem;text-align:left;}
+  .subst-table tbody tr{border-top:1px solid rgba(255,255,255,.08);transition:background .15s;}
+  .subst-table tbody tr:hover{background:rgba(255,255,255,.07);}
+  .subst-table td{padding:1rem 1.2rem;font-size:.9rem;vertical-align:middle;}
+  .subst-table td:first-child{color:rgba(255,255,255,.5);text-decoration:line-through;text-decoration-color:var(--rose);}
+  .subst-table td:nth-child(2){width:40px;text-align:center;}
+  .subst-table td:nth-child(3){color:white;font-weight:600;}
+  .subst-table td:last-child{color:rgba(255,255,255,.55);font-size:.82rem;}
+  .arrow{color:var(--peach);font-weight:700;font-size:1.1rem;}
+
+  /* SECTION TITLES */
+  .section-header{text-align:center;padding:5rem 2rem 3rem;}
+  .section-header .label{font-family:'Space Mono',monospace;font-size:.7rem;letter-spacing:.15em;color:var(--rose);text-transform:uppercase;margin-bottom:.75rem;}
+  .section-header h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.2rem);}
+
+  /* PRODUITS */
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto 4rem;padding:0 2rem;}
+  .product-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(200,80,120,.08);transition:transform .3s,box-shadow .3s;}
+  .product-card:hover{transform:translateY(-6px);box-shadow:0 12px 35px rgba(200,80,120,.15);}
+  .card-img-padded{width:100%;height:200px;display:flex;align-items:center;justify-content:center;background:#FFF0F5;padding:1rem;}
+  .card-img-padded img{max-height:170px;max-width:100%;object-fit:contain;}
+  .card-color{height:6px;}
+  .card-body{padding:1.5rem;}
+  .card-emoji{font-size:2rem;margin-bottom:.6rem;display:block;}
+  .card-title{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:.5rem;}
+  .card-desc{font-size:.87rem;color:var(--muted);line-height:1.65;}
+  .card-badge{display:inline-block;background:var(--warm);color:var(--deep-rose);font-size:.7rem;font-weight:500;padding:.2rem .6rem;border-radius:10px;margin-top:.75rem;font-family:'Space Mono',monospace;}
+
+  /* TUBERCULES */
+  .tubercules-section{background:linear-gradient(135deg,#FFF0F7 0%,#F9E0EE 100%);padding:4rem 0;}
+  .tubercules-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto;padding:0 2rem;}
+  .tubercule-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 16px rgba(200,80,120,.08);transition:transform .3s;display:flex;flex-direction:column;}
+  .tubercule-card:hover{transform:translateY(-5px);}
+  .tubercule-img-wrap{width:100%;height:160px;display:flex;align-items:center;justify-content:center;background:#FFF5F8;padding:.75rem;}
+  .tubercule-img-wrap img{max-height:140px;max-width:100%;object-fit:contain;}
+  .tubercule-body{padding:1.25rem;flex:1;}
+  .tubercule-name{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:.4rem;}
+  .tubercule-desc{font-size:.83rem;color:var(--muted);line-height:1.6;}
+  .tubercule-tip{font-size:.78rem;color:var(--mauve);font-weight:500;margin-top:.6rem;background:#F5EAFA;padding:.3rem .6rem;border-radius:8px;display:inline-block;}
+
+  /* RECETTES */
+  .recipes-section{background:linear-gradient(180deg,var(--cream) 0%,var(--warm) 100%);padding:2rem 0 5rem;}
+  .recipe-tabs{display:flex;justify-content:center;gap:.75rem;margin-bottom:3rem;flex-wrap:wrap;padding:0 1rem;}
+  .tab-btn{background:white;border:2px solid var(--sand);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:500;padding:.6rem 1.4rem;border-radius:30px;cursor:pointer;transition:all .2s;}
+  .tab-btn.active,.tab-btn:hover{background:var(--rose);border-color:var(--rose);color:white;}
+  .recipes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.5rem;max-width:1100px;margin:0 auto;padding:0 2rem;}
+  .recipe-card{background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(200,80,120,.07);transition:transform .3s;}
+  .recipe-card:hover{transform:translateY(-4px);}
+  .recipe-visual{width:100%;height:160px;display:flex;align-items:center;justify-content:center;font-size:4.5rem;}
+  .recipe-body{padding:1.5rem;position:relative;}
+  .recipe-body::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--light-mauve),var(--rose));}
+  .recipe-time{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--rose);letter-spacing:.05em;margin-bottom:.5rem;}
+  .recipe-title{font-family:'Playfair Display',serif;font-size:1.2rem;margin-bottom:.7rem;}
+  .recipe-ingredients{font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:1rem;}
+  .recipe-link{display:inline-flex;align-items:center;gap:.4rem;color:var(--mauve);font-size:.85rem;font-weight:500;text-decoration:none;border-bottom:1px dashed var(--light-mauve);padding-bottom:1px;transition:color .2s;}
+  .recipe-link:hover{color:var(--deep-rose);border-color:var(--deep-rose);}
+
+  /* FARINES */
+  .flour-wrap{padding:4rem 2rem;max-width:1100px;margin:0 auto;}
+  .flour-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.25rem;margin-top:2.5rem;}
+  .flour-item{background:white;border-radius:16px;padding:1.5rem 1.25rem;text-align:center;border:2px solid var(--sand);transition:border-color .2s,transform .2s;}
+  .flour-item:hover{border-color:var(--rose);transform:scale(1.02);}
+  .flour-icon{font-size:2.5rem;margin-bottom:.75rem;}
+  .flour-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;}
+  .flour-use{font-size:.8rem;color:var(--muted);margin-top:.4rem;}
+
+  /* SITES */
+  .resources-section{background:linear-gradient(135deg,#3D1A2E 0%,#5C2947 100%);color:white;padding:5rem 2rem;}
+  .resources-section .section-header .label{color:var(--light-mauve);}
+  .resources-section .section-header h2{color:white;}
+  .resources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;max-width:900px;margin:3rem auto 0;}
+  .resource-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:1.75rem;transition:background .2s,transform .2s;}
+  .resource-card:hover{background:rgba(255,255,255,.14);transform:translateY(-3px);}
+  .resource-card .icon{font-size:2rem;margin-bottom:1rem;}
+  .resource-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:.5rem;color:white;}
+  .resource-card p{font-size:.85rem;color:rgba(255,255,255,.65);line-height:1.65;margin-bottom:1rem;}
+  .resource-link{color:var(--light-mauve);font-size:.82rem;font-family:'Space Mono',monospace;text-decoration:none;}
+  .resource-link:hover{color:var(--peach);}
+
+  /* FOOTER */
+  footer{background:var(--warm);text-align:center;padding:3rem 2rem;}
+  footer p{color:var(--muted);font-size:.88rem;line-height:1.8;}
+  footer strong{color:var(--deep-rose);}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:600px){.hero h1{font-size:2.8rem}.alert-section{margin:2rem 1rem}.subst-table td:last-child{display:none}}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-emoji">🌸</span>
+    <h1>Manger<br><em>sans gluten</em></h1>
+    <p class="hero-sub">Un guide simple pour manger sans gluten. Tous les produits sont disponibles en grandes surfaces et en magasin bio.</p>
+  </div>
+  <div class="scroll-hint">↓</div>
+</section>
+
+<!-- ALERTE -->
+<div class="alert-section">
+  <h2>⚠️ Avant tout, un point important</h2>
+  <p>Les ballonnements, gaz et fatigue peuvent venir de plusieurs sources. Commence par éliminer le gluten quelques semaines — si aucune amélioration, ce n'est probablement pas lui le coupable.</p>
+  <div class="causes-grid">
+    <div class="cause-card"><div class="icon">🫘</div><p>Légumineuses (pois chiche, lentilles)</p></div>
+    <div class="cause-card"><div class="icon">🥛</div><p>Produits laitiers (surtout le lactose)</p></div>
+    <div class="cause-card"><div class="icon">🥦</div><p>Crudités en excès (chou cru, carotte)</p></div>
+    <div class="cause-card"><div class="icon">🍱</div><p>Trop d'aliments "difficiles" dans un même repas</p></div>
+  </div>
+</div>
+
+<!-- SUBSTITUTION -->
+<section class="subst-section">
+  <div class="subst-inner">
+    <div class="section-header">
+      <span class="label">🔄 aide-mémoire cuisine</span>
+      <h2>Tableau de substitution</h2>
+    </div>
+    <table class="subst-table">
+      <thead>
+        <tr>
+          <th>À la place de…</th>
+          <th></th>
+          <th>Prends…</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Farine de blé</td><td><span class="arrow">→</span></td><td>Mix Schär Mix-C</td><td>Remplacement 1:1, résultat proche</td></tr>
+        <tr><td>Farine de blé</td><td><span class="arrow">→</span></td><td>Farine de riz</td><td>Idéale pour les préparations légères</td></tr>
+        <tr><td>Semoule de blé</td><td><span class="arrow">→</span></td><td>Couscous de maïs-riz</td><td>Même utilisation, même texture</td></tr>
+        <tr><td>Chapelure</td><td><span class="arrow">→</span></td><td>Chapelure de riz (Schär)</td><td>Pour panures, gratins, farces</td></tr>
+        <tr><td>Pain de mie classique</td><td><span class="arrow">→</span></td><td>Pain Schär Maestro</td><td>Texture très proche une fois grillé</td></tr>
+        <tr><td>Pâtes classiques</td><td><span class="arrow">→</span></td><td>Pâtes de riz ou de maïs</td><td>Cuire al dente, égoutter vite</td></tr>
+        <tr><td>Sauce soja</td><td><span class="arrow">→</span></td><td>Sauce Tamari</td><td>Même goût, naturellement SG</td></tr>
+        <tr><td>Levure chimique classique</td><td><span class="arrow">→</span></td><td>Levure chimique SG</td><td>Rayon bio, MyBioShop ou Biocoop</td></tr>
+        <tr><td>Biscuits apéro</td><td><span class="arrow">→</span></td><td>Crackers Schär ou galettes de riz</td><td>Même usage, même plaisir</td></tr>
+        <tr><td>Maïzena (si contaminée)</td><td><span class="arrow">→</span></td><td>Fécule de pomme de terre</td><td>Naturellement SG, même pouvoir liant</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SUBSTITUTS -->
+<section>
+  <div class="section-header">
+    <div class="label">🛒 ce que tu peux acheter</div>
+    <h2>Les substituts essentiels</h2>
+  </div>
+  <div class="cards-grid">
+
+    <div class="product-card">
+      <div class="card-img-padded">
+        <img src="https://www.schaer.com/sites/default/files/2023-07/headerproducts_maestro-classic.jpg" alt="Pain Maestro Classic Schär sans gluten">
+      </div>
+      <div class="card-color" style="background:linear-gradient(90deg,#E8779A,#F4A99A)"></div>
+      <div class="card-body">
+        <span class="card-emoji">🍞</span>
+        <div class="card-title">Pain sans gluten</div>
+        <p class="card-desc">Pain de mie <strong>Schär Maestro Classic</strong>, <strong>Genius</strong> (ultramoelleux), ou Marque Repère. Pour le pain rustique, le <strong>pain de sarrasin du boulanger</strong> aura toujours meilleur goût que l'industriel.</p>
+        <span class="card-badge">Leclerc · Carrefour · Boulangerie</span>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-img-padded">
+        <img src="https://www.schaer.com/sites/default/files/2022-04/SCHAR_SNACK_Crackers.jpg" alt="Crackers Schär sans gluten">
+      </div>
+      <div class="card-color" style="background:linear-gradient(90deg,#C9A8CC,#9B6B9E)"></div>
+      <div class="card-body">
+        <span class="card-emoji">🫓</span>
+        <div class="card-title">Crackers & galettes de riz</div>
+        <p class="card-desc">Crackers Schär nature ou graines, galettes de riz soufflé (toutes marques), gressins Schär pour les dips. Idéal avec houmous, guacamole ou tarama.</p>
+        <span class="card-badge">MyBioShop · Biocoop · partout</span>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-img-padded">
+        <img src="https://www.schaer.com/sites/default/files/2023-07/headerproducts_grissini.jpg" alt="Grissini Schär sans gluten">
+      </div>
+      <div class="card-color" style="background:linear-gradient(90deg,#F4A99A,#E8779A)"></div>
+      <div class="card-body">
+        <span class="card-emoji">🍝</span>
+        <div class="card-title">Pâtes sans gluten</div>
+        <p class="card-desc">Pâtes de riz (Rummo, Garofalo), de maïs/polenta (Barilla GF), de lentilles corail (MyBioShop), de sarrasin, ou couscous de maïs-riz. Cuire <strong>al dente</strong> obligatoire !</p>
+        <span class="card-badge">⚠️ al dente obligatoire</span>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-img-padded">
+        <img src="https://www.schaer.com/sites/default/files/2022-02/SCHAER_BK_WRAP.jpg" alt="Wraps Schär sans gluten">
+      </div>
+      <div class="card-color" style="background:linear-gradient(90deg,#9B6B9E,#C9A8CC)"></div>
+      <div class="card-body">
+        <span class="card-emoji">🌯</span>
+        <div class="card-title">Wraps & galettes</div>
+        <p class="card-desc">Wraps de riz Schär (2 pièces / 160g), galettes de sarrasin (blé noir, naturellement SG), tortillas de maïs Old El Paso (rayon mexicain). Garnir comme un sandwich.</p>
+        <span class="card-badge">Schär · Sarrasin · Old El Paso</span>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-img-padded">
+        <img src="https://www.schaer.com/sites/default/files/2023-07/headerproducts_hamburger.jpg" alt="Pâte à pizza et tarte Schär sans gluten">
+      </div>
+      <div class="card-color" style="background:linear-gradient(90deg,#E8779A,#9B6B9E)"></div>
+      <div class="card-body">
+        <span class="card-emoji">🥧</span>
+        <div class="card-title">Pâtes à tarte & pizza</div>
+        <p class="card-desc">Pâte brisée Schär ou Herta Naturellement (rayon frais). Pâte à pizza Schär 300g, fine et croustillante. Astuce : 150g farine de riz + 50g fécule de maïs + eau + huile = pâte en 5 min.</p>
+        <span class="card-badge">Rayon frais ou SG</span>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="card-img-padded">
+        <img src="https://www.schaer.com/sites/default/files/2023-07/headerproducts_maestro-cereale.jpg" alt="Céréales sans gluten quinoa millet sarrasin">
+      </div>
+      <div class="card-color" style="background:linear-gradient(90deg,#F4A99A,#C9A8CC)"></div>
+      <div class="card-body">
+        <span class="card-emoji">🌾</span>
+        <div class="card-title">Céréales de substitution</div>
+        <p class="card-desc">Quinoa, millet, sarrasin, riz complet, amarante — naturellement sans gluten. Le couscous de maïs-riz est idéal pour varier. Disponibles en vrac chez MyBioShop.</p>
+        <span class="card-badge">Naturellement SG · MyBioShop</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TUBERCULES -->
+<section class="tubercules-section">
+  <div class="section-header">
+    <div class="label">🥔 des bases sous-estimées</div>
+    <h2>Les tubercules</h2>
+    <p style="color:var(--muted);max-width:480px;margin:1rem auto 0;font-size:.92rem">Naturellement sans gluten et rassasiants. À adopter sans hésiter !</p>
+  </div>
+  <div class="tubercules-grid">
+
+    <div class="tubercule-card">
+      <div class="tubercule-img-wrap">
+        <img src="https://fr.openfoodfacts.org/images/products/326/385/712/0017/front_fr.6.400.jpg" alt="patate douce" onerror="this.parentElement.innerHTML='<span style=font-size:4rem>🍠</span>'">
+      </div>
+      <div class="tubercule-body">
+        <div class="tubercule-name">🍠 Patate douce</div>
+        <p class="tubercule-desc">Au four, en purée, en frites, en soupe ou en pancakes sucrés.</p>
+        <span class="tubercule-tip">⏱ 20 min au four · 10 min vapeur</span>
+      </div>
+    </div>
+
+    <div class="tubercule-card">
+      <div class="tubercule-img-wrap" style="background:#fff5f8;">
+        <img src="https://fr.openfoodfacts.org/images/products/326/385/712/3285/front_fr.5.400.jpg" alt="pomme de terre" onerror="this.parentElement.innerHTML='<span style=font-size:4rem>🥔</span>'">
+      </div>
+      <div class="tubercule-body">
+        <div class="tubercule-name">🥔 Pomme de terre</div>
+        <p class="tubercule-desc">Rôtie à l'huile d'olive, en gratin, en purée maison ou en salade tiède.</p>
+        <span class="tubercule-tip">Rôties à l'huile d'olive = top</span>
+      </div>
+    </div>
+
+    <div class="tubercule-card">
+      <div class="tubercule-img-wrap" style="background:#fdf0f5;">
+        <img src="https://fr.openfoodfacts.org/images/products/308/530/000/0087/front_fr.6.400.jpg" alt="manioc tapioca" onerror="this.parentElement.innerHTML='<span style=font-size:4rem>🌿</span>'">
+      </div>
+      <div class="tubercule-body">
+        <div class="tubercule-name">🌿 Manioc / Tapioca</div>
+        <p class="tubercule-desc">Très digeste. La fécule de tapioca est un excellent liant dans les recettes SG. En perles pour des puddings crémeux.</p>
+        <span class="tubercule-tip">Fécule = liant naturel SG</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RECETTES -->
+<section class="recipes-section">
+  <div class="section-header">
+    <div class="label">⚡ en moins de 20 minutes</div>
+    <h2>Recettes express</h2>
+  </div>
+  <div class="recipe-tabs">
+    <button class="tab-btn active" onclick="filterRecipes('all',this)">Tout</button>
+    <button class="tab-btn" onclick="filterRecipes('sucre',this)">🍰 Sucré</button>
+    <button class="tab-btn" onclick="filterRecipes('sale',this)">🥗 Salé</button>
+  </div>
+  <div class="recipes-grid" id="recipesGrid">
+
+    <div class="recipe-card" data-type="sucre">
+      <div class="recipe-visual" style="background:linear-gradient(135deg,#FFE8EF,#FCCFDC);">🥞</div>
+      <div class="recipe-body">
+        <div class="recipe-time">⏱ 15 MIN · PETIT-DÉJ</div>
+        <div class="recipe-title">Pancakes express à la farine de riz</div>
+        <p class="recipe-ingredients">90g farine de riz + 1 yaourt + 1 œuf + bicarbonate. Cuire 2 min par face. Sirop d'érable, fruits frais ou confiture.</p>
+        <a class="recipe-link" href="https://www.clemsansgluten.com/recette-gluten-pancake-express/" target="_blank">Voir la recette →</a>
+      </div>
+    </div>
+
+    <div class="recipe-card" data-type="sucre">
+      <div class="recipe-visual" style="background:linear-gradient(135deg,#FFF0D8,#FFE4B8);">🍌</div>
+      <div class="recipe-body">
+        <div class="recipe-time">⏱ 10 MIN · PETIT-DÉJ</div>
+        <div class="recipe-title">Pancakes banane 2 ingrédients</div>
+        <p class="recipe-ingredients">1 banane bien mûre écrasée + 2 œufs. Zéro farine, zéro sucre ajouté. Cuire 2 min par face dans une poêle antiadhésive.</p>
+        <a class="recipe-link" href="https://les-brunches.fr/brunch-sucre/pancakes-sans-gluten-3-recettes/" target="_blank">3 variantes →</a>
+      </div>
+    </div>
+
+    <div class="recipe-card" data-type="sucre">
+      <div class="recipe-visual" style="background:linear-gradient(135deg,#F0E8FF,#DDD0F5);">🫐</div>
+      <div class="recipe-body">
+        <div class="recipe-time">⏱ 5 MIN · PETIT-DÉJ</div>
+        <div class="recipe-title">Smoothie bowl</div>
+        <p class="recipe-ingredients">Yaourt grec + banane congelée + myrtilles + granola SG (MyBioShop ou Biocoop) + graines de chia.</p>
+        <a class="recipe-link" href="https://gorecettes.com/petit-dejeuner-sans-gluten/" target="_blank">Idées petit-déj →</a>
+      </div>
+    </div>
+
+    <div class="recipe-card" data-type="sale">
+      <div class="recipe-visual" style="background:linear-gradient(135deg,#FFF0F5,#FFE0EC);">🍳</div>
+      <div class="recipe-body">
+        <div class="recipe-time">⏱ 5 MIN · DÎNER RAPIDE</div>
+        <div class="recipe-title">Omelette garnie express</div>
+        <p class="recipe-ingredients">Naturellement SG. Fromage, jambon, épinards, tomates, champignons selon l'humeur. Avec salade verte = repas complet.</p>
+        <a class="recipe-link" href="https://cuisine-saine.fr/toutes-les-recettes-rapides/" target="_blank">Plus d'idées express →</a>
+      </div>
+    </div>
+
+    <div class="recipe-card" data-type="sale">
+      <div class="recipe-visual" style="background:linear-gradient(135deg,#E8F5F0,#D0EDE5);">🥗</div>
+      <div class="recipe-body">
+        <div class="recipe-time">⏱ 10 MIN · DÉJEUNER</div>
+        <div class="recipe-title">Salade de riz complète</div>
+        <p class="recipe-ingredients">Riz cuit d'avance (4 jours au frigo) + thon ou poulet + avocat + tomates cerises + maïs + vinaigrette citron-moutarde.</p>
+        <a class="recipe-link" href="https://jow.fr/blog/posts/idees-recettes-sans-gluten" target="_blank">Idées Jow →</a>
+      </div>
+    </div>
+
+    <div class="recipe-card" data-type="sale">
+      <div class="recipe-visual" style="background:linear-gradient(135deg,#FFF0D8,#FFE0C0);">🍛</div>
+      <div class="recipe-body">
+        <div class="recipe-time">⏱ 20 MIN · DÎNER</div>
+        <div class="recipe-title">Curry de légumes express</div>
+        <p class="recipe-ingredients">Oignon + patate douce + lait de coco + curry en poudre + riz.</p>
+        <a class="recipe-link" href="https://cuisine-saine.fr/toutes-les-recettes-rapides/" target="_blank">Cuisine Saine →</a>
+      </div>
+    </div>
+
+    <div class="recipe-card" data-type="sale">
+      <div class="recipe-visual" style="background:linear-gradient(135deg,#EEF0FF,#DDE0FA);">🍜</div>
+      <div class="recipe-body">
+        <div class="recipe-time">⏱ 15 MIN · DÎNER</div>
+        <div class="recipe-title">One pot pâtes de riz champignons</div>
+        <p class="recipe-ingredients">Pâtes de riz + champignons + ail + sauce tamari (soja SG) + sésame. Tout dans une seule casserole.</p>
+        <a class="recipe-link" href="https://www.maviesansgluten.bio/nos-recettes-sans-gluten/" target="_blank">Ma Vie Sans Gluten →</a>
+      </div>
+    </div>
+
+    <div class="recipe-card" data-type="sucre">
+      <div class="recipe-visual" style="background:linear-gradient(135deg,#3D1A2E,#5C2947);">🍫</div>
+      <div class="recipe-body">
+        <div class="recipe-time">⏱ 15 MIN · GOÛTER</div>
+        <div class="recipe-title">Muffins choco-banane</div>
+        <p class="recipe-ingredients">Banane + cacao + œufs + beurre de cacahuète. Zéro farine, naturellement SG, ultramoelleux.</p>
+        <a class="recipe-link" href="https://jecuisinesansgluten.com/article/sucre/" target="_blank">Recettes sucrées →</a>
+      </div>
+    </div>
+
+    <div class="recipe-card" data-type="sucre">
+      <div class="recipe-visual" style="background:linear-gradient(135deg,#FFFDE8,#FFF8C0);">🍋</div>
+      <div class="recipe-body">
+        <div class="recipe-time">⏱ 10 MIN · DESSERT</div>
+        <div class="recipe-title">Crèmes dessert citron-coco</div>
+        <p class="recipe-ingredients">Lait de coco + jus de citron + maïzena + sucre. Léger, sans œufs, prêt en 10 min.</p>
+        <a class="recipe-link" href="https://jecuisinesansgluten.com/article/sucre/" target="_blank">Voir la recette →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FARINES -->
+<section>
+  <div class="section-header" style="padding-bottom:0">
+    <div class="label">🌾 pour cuisiner maison</div>
+    <h2>Quelle farine choisir ?</h2>
+    <p style="color:var(--muted);max-width:500px;margin:1rem auto 0;font-size:.9rem">En vente chez MyBioShop, Biocoop ou au rayon bio/SG des supermarchés.</p>
+  </div>
+  <div class="flour-wrap">
+    <div class="flour-grid">
+      <div class="flour-item"><div class="flour-icon">🌾</div><div class="flour-name">Farine de riz</div><div class="flour-use">Polyvalente · pancakes, gâteaux, sauces</div></div>
+      <div class="flour-item"><div class="flour-icon">🌰</div><div class="flour-name">Châtaigne</div><div class="flour-use">Sucrée · crêpes, cakes, biscuits</div></div>
+      <div class="flour-item"><div class="flour-icon">🫘</div><div class="flour-name">Pois chiche</div><div class="flour-use">Protéinée · socca, falafels, tempura</div></div>
+      <div class="flour-item"><div class="flour-icon">🎋</div><div class="flour-name">Sarrasin</div><div class="flour-use">Galettes bretonnes · crêpes salées</div></div>
+      <div class="flour-item"><div class="flour-icon">🌿</div><div class="flour-name">Quinoa</div><div class="flour-use">Protéinée · cakes salés, galettes</div></div>
+      <div class="flour-item"><div class="flour-icon">🌽</div><div class="flour-name">Fécule de maïs</div><div class="flour-use">Lier sauces · alléger les pâtes</div></div>
+      <div class="flour-item"><div class="flour-icon">⭐</div><div class="flour-name">Mix Schär Mix-C</div><div class="flour-use">Remplacement 1:1 de la farine de blé</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SITES -->
+<section class="resources-section">
+  <div class="section-header">
+    <div class="label">🔗 sites de confiance</div>
+    <h2>Pour aller plus loin</h2>
+  </div>
+  <div class="resources-grid">
+    <div class="resource-card"><div class="icon">🌿</div><h3>Cuisine Saine</h3><p>Des centaines de recettes rapides SG, bien organisées par temps de préparation.</p><a class="resource-link" href="https://cuisine-saine.fr/toutes-les-recettes-rapides/" target="_blank">cuisine-saine.fr →</a></div>
+    <div class="resource-card"><div class="icon">🍽️</div><h3>Je Cuisine Sans Gluten</h3><p>Recettes inratables, conseils et astuces testés en famille. Très complet.</p><a class="resource-link" href="https://jecuisinesansgluten.com/" target="_blank">jecuisinesansgluten.com →</a></div>
+    <div class="resource-card"><div class="icon">✨</div><h3>Ma Vie Sans Gluten</h3><p>Site de la marque Schär — recettes créatives et guide des produits en magasin.</p><a class="resource-link" href="https://www.maviesansgluten.bio/nos-recettes-sans-gluten/" target="_blank">maviesansgluten.bio →</a></div>
+    <div class="resource-card"><div class="icon">⚡</div><h3>Rapide Sans Gluten</h3><p>Recettes express avec liste de courses auto-générée. Adapté sans lactose aussi.</p><a class="resource-link" href="https://rapidesansgluten.com/" target="_blank">rapidesansgluten.com →</a></div>
+    <div class="resource-card"><div class="icon">📱</div><h3>Jow</h3><p>App de menus sans gluten avec liste de courses directe. Pratique pour la semaine.</p><a class="resource-link" href="https://jow.fr/blog/posts/idees-recettes-sans-gluten" target="_blank">jow.fr →</a></div>
+    <div class="resource-card"><div class="icon">🧁</div><h3>Clem Sans Gluten</h3><p>Blog famille avec recettes testées, top pour les pancakes et les blinis.</p><a class="resource-link" href="https://www.clemsansgluten.com/" target="_blank">clemsansgluten.com →</a></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Fait avec soin par <strong>Sarah</strong><br>
+  <span style="font-size:.8rem">Ce guide n'est pas un diagnostic médical. Si les symptômes persistent, consulte un médecin ou une diététicienne.</span></p>
+</footer>
+
+<script>
+function filterRecipes(type, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.recipe-card').forEach(card => {
+    card.style.display = (type === 'all' || card.dataset.type.includes(type)) ? 'block' : 'none';
+  });
+}
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.product-card,.recipe-card,.tubercule-card,.flour-item,.resource-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
